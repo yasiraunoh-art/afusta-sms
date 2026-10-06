@@ -1,0 +1,40 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}AFUSTA CS Result Alert{% endblock %}</title>
+  <link rel="icon" href="{% static 'images/logo.jpg' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="row">
+      <a class="brand" href="{% url 'home' %}">
+        <img src="{% static 'images/logo.jpg' %}" alt="AFUSTA crest">
+        <span class="brand-text">
+          <span class="brand-word">AFUSTA &middot; CS Dept</span>
+          <span class="brand-sub">Result Alert System</span>
+        </span>
+      </a>
+      <nav class="nav-actions">
+        {% if user.is_authenticated %}
+          <a class="btn btn-outline" href="{% url 'accounts:redirect_after_login' %}">My dashboard</a>
+        {% else %}
+          <a class="btn btn-outline" href="{% url 'accounts:login' %}">Log in</a>
+          <a class="btn btn-primary" href="{% url 'accounts:register_student' %}">Student sign up</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  {% block content %}{% endblock %}
+
+  <footer class="site-footer">
+    Department of Computer Science, Abdullahi Fodio University of Science &amp; Technology, Aliero. Knowledge for self reliance.
+  </footer>
+</body>
+</html>

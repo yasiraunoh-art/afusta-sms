@@ -1,0 +1,20 @@
+{% extends 'base_app.html' %}
+{% block title %}Confirm delete{% endblock %}
+{% block page_title %}Confirm delete{% endblock %}
+
+{% block sidenav %}{% include 'academics/_admin_nav.html' %}{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:520px;">
+  <h2 style="font-size:17px; margin-bottom:10px;">Delete {{ label }}?</h2>
+  {% if warning %}<p class="helptext" style="font-size:14px;">{{ warning }}</p>{% endif %}
+  <p>This cannot be undone.</p>
+  <form method="post">
+    {% csrf_token %}
+    <div style="display:flex; gap:10px; margin-top:18px;">
+      <button class="btn btn-danger" type="submit">Yes, delete</button>
+      <a class="btn btn-outline" href="{% url back_to %}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base_app.html' %}
+{% block title %}Notification log{% endblock %}
+{% block page_title %}Notification log{% endblock %}
+
+{% block sidenav %}{% include 'academics/_admin_nav.html' with active='log' %}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="section-title">
+    <h2>Recent delivery attempts</h2>
+    <span class="helptext">"Simulated" means Africa's Talking credentials are not configured yet &mdash; see the readme.</span>
+  </div>
+  {% if logs %}
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr><th>Student</th><th>Course</th><th>Channel</th><th>Status</th><th>Detail</th><th>When</th></tr>
+        </thead>
+        <tbody>
+          {% for log in logs %}
+          <tr>
+            <td>{{ log.result.student.get_full_name }}</td>
+            <td class="col-id">{{ log.result.course.course_code }}</td>
+            <td class="col-muted">{{ log.get_channel_display }}</td>
+            <td><span class="badge badge-{{ log.status }}">{{ log.get_status_display }}</span></td>
+            <td class="col-detail">{{ log.detail }}</td>
+            <td class="col-muted col-nowrap">{{ log.sent_at|date:"d M, H:i" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty">
+      <strong>No notifications sent yet</strong>
+      Approve a pending result and the delivery attempt will show up here.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

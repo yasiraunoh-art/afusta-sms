@@ -1,0 +1,5 @@
+{% comment %}Lecturer sidebar. Keys: overview, upload, bulk{% endcomment %}
+<p class="side-label">Teaching</p>
+<a class="side-link{% if active == 'overview' %} active{% endif %}" href="{% url 'academics:lecturer_dashboard' %}">Overview</a>
+<a class="side-link{% if active == 'upload' %} active{% endif %}" href="{% url 'academics:upload_result' %}">Upload a result</a>
+<a class="side-link{% if active == 'bulk' %} active{% endif %}" href="{% url 'academics:bulk_upload_results' %}">Bulk upload (CSV)</a>

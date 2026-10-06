@@ -1,0 +1,15 @@
+{% comment %}
+Default sidebar contents: picks the nav for whichever role is logged in.
+
+Pages that want a link highlighted override the `sidenav` block instead and
+include their role's nav directly with an `active` key, e.g.
+
+  {% block sidenav %}{% include 'academics/_admin_nav.html' with active='courses' %}{% endblock %}
+{% endcomment %}
+{% if request.user.role == 'admin' %}
+  {% include 'academics/_admin_nav.html' %}
+{% elif request.user.role == 'lecturer' %}
+  {% include 'academics/_lecturer_nav.html' %}
+{% elif request.user.role == 'student' %}
+  {% include 'academics/_student_nav.html' %}
+{% endif %}

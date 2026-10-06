@@ -1,0 +1,48 @@
+{% extends 'base_app.html' %}
+{% block title %}Students{% endblock %}
+{% block page_title %}Registered students{% endblock %}
+
+{% block sidenav %}{% include 'academics/_admin_nav.html' with active='students' %}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="section-title">
+    <h2 style="font-size:17px;">All students</h2>
+    <a class="btn btn-primary btn-sm" href="{% url 'academics:add_student' %}">Add student</a>
+  </div>
+  {% if students %}
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Matric no.</th><th>Name</th><th>Level</th><th>Email</th><th>Phone</th>
+            <th class="col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in students %}
+          <tr>
+            <td class="col-id">{{ s.student_profile.matric_no }}</td>
+            <td>{{ s.get_full_name }}</td>
+            <td class="col-muted">{{ s.student_profile.level }}</td>
+            <td class="col-muted">{{ s.email }}</td>
+            <td class="col-muted col-nowrap">{{ s.phone }}</td>
+            <td class="col-actions">
+              <span class="row-actions">
+                <a class="btn btn-outline btn-sm" href="{% url 'academics:edit_student' s.pk %}">Edit</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'academics:delete_student' s.pk %}">Delete</a>
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty">
+      <strong>No students yet</strong>
+      Students can register themselves from the home page, or add one here.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

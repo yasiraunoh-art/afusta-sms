@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+<div class="auth-split">
+  <aside class="auth-visual">
+    <div>
+      <h2>Results reach you where you already are.</h2>
+      <p>Abdullahi Fodio University of Science &amp; Technology, Aliero &mdash; Department of Computer Science.</p>
+    </div>
+  </aside>
+
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2>Welcome back</h2>
+      <p class="sub">Log in with your matric number, staff ID, or admin username.</p>
+
+      {% if messages %}
+        <div class="alerts">
+          {% for message in messages %}<div class="alert alert-{{ message.tags }}">{{ message }}</div>{% endfor %}
+        </div>
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+        {% include '_form_fields.html' %}
+        <button class="btn btn-primary btn-block" style="margin-top:24px;" type="submit">Log in</button>
+      </form>
+      <p class="auth-foot">New student? <a href="{% url 'accounts:register_student' %}">Create an account</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

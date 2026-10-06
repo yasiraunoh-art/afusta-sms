@@ -1,0 +1,3 @@
+{% comment %}Student sidebar. Keys: results{% endcomment %}
+<p class="side-label">My account</p>
+<a class="side-link{% if active == 'results' %} active{% endif %}" href="{% url 'academics:student_dashboard' %}">My results</a>

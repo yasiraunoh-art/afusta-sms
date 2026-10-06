@@ -1,0 +1,27 @@
+databases:
+  - name: afusta-result-alert-db
+    databaseName: afusta_result_alert
+    user: afusta_result_alert
+    plan: free
+
+services:
+  - type: web
+    name: afusta-result-alert
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --no-input
+    startCommand: python manage.py migrate --noinput && python manage.py seed_demo_data && gunicorn resultalert.wsgi:application --bind 0.0.0.0:$PORT
+    healthCheckPath: /
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: afusta-result-alert-db
+          property: connectionString
+      - key: DEMO_ADMIN_PASSWORD
+        sync: false
+      - key: EMAIL_BACKEND
+        value: django.core.mail.backends.console.EmailBackend

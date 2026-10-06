@@ -1,0 +1,59 @@
+{% extends 'base_app.html' %}
+{% block title %}Pending approvals{% endblock %}
+{% block page_title %}Pending approvals{% endblock %}
+
+{% block sidenav %}{% include 'academics/_admin_nav.html' with active='pending' %}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="section-title">
+    <h2>Awaiting your review</h2>
+    <span class="helptext">Approving sends the SMS + email alert immediately.</span>
+  </div>
+  {% if results %}
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Student</th><th>Course</th><th>Score</th><th>Session</th><th>Uploaded by</th>
+            <th class="col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for result in results %}
+          <tr>
+            <td>
+              {{ result.student.get_full_name }}
+              <span class="col-muted">({{ result.student.student_profile.matric_no }})</span>
+            </td>
+            <td class="col-id">{{ result.course.course_code }}</td>
+            <td class="col-nowrap">
+              {{ result.score }} <span class="badge badge-grade">{{ result.grade }}</span>
+            </td>
+            <td class="col-muted col-nowrap">{{ result.get_semester_display }}, {{ result.session }}</td>
+            <td class="col-muted">{{ result.uploaded_by.get_full_name }}</td>
+            <td class="col-actions">
+              <span class="row-actions">
+                <form method="post" action="{% url 'academics:approve_result' result.pk %}">
+                  {% csrf_token %}
+                  <button class="btn btn-primary btn-sm" type="submit">Approve</button>
+                </form>
+                <form method="post" action="{% url 'academics:reject_result' result.pk %}">
+                  {% csrf_token %}
+                  <button class="btn btn-danger btn-sm" type="submit">Reject</button>
+                </form>
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty">
+      <strong>All caught up</strong>
+      Nothing is waiting on you right now.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

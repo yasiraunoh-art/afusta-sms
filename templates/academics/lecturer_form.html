@@ -1,0 +1,18 @@
+{% extends 'base_app.html' %}
+{% block title %}Edit lecturer{% endblock %}
+{% block page_title %}Edit {{ lecturer.get_full_name }}{% endblock %}
+
+{% block sidenav %}{% include 'academics/_admin_nav.html' with active='lecturers' %}{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:440px;">
+  <form method="post">
+    {% csrf_token %}
+    {% include '_form_fields.html' %}
+    <div style="display:flex; gap:10px; margin-top:20px;">
+      <button class="btn btn-primary" type="submit">Save changes</button>
+      <a class="btn btn-outline" href="{% url 'academics:manage_lecturers' %}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

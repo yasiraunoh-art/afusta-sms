@@ -1,0 +1,43 @@
+{% extends 'base_app.html' %}
+{% block title %}Settings{% endblock %}
+{% block page_title %}Settings{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <h2 style="font-size:20px;">Account settings</h2>
+  <p>Your sign-in details and the contact points your result alerts are sent to.</p>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h3 class="card-title">Your profile</h3>
+    <dl class="info-list">
+      <div class="info-row"><dt>Name</dt><dd>{{ request.user.get_full_name|default:"—" }}</dd></div>
+      <div class="info-row"><dt>Role</dt><dd>{{ request.user.get_role_display }}</dd></div>
+      <div class="info-row">
+        <dt>{% if request.user.role == 'student' %}Matric no.{% elif request.user.role == 'lecturer' %}Staff ID{% else %}Username{% endif %}</dt>
+        <dd>{{ request.user.username }}</dd>
+      </div>
+      <div class="info-row"><dt>Email</dt><dd>{{ request.user.email|default:"—" }}</dd></div>
+      <div class="info-row"><dt>Phone</dt><dd>{{ request.user.phone|default:"—" }}</dd></div>
+    </dl>
+    <p class="helptext" style="margin-top:14px;">
+      Alerts go to the email and phone above. Ask the department admin if either needs correcting.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3 class="card-title">Change password</h3>
+    <p class="helptext" style="margin-bottom:18px;">
+      You'll stay signed in on this device after changing it.
+    </p>
+    <form method="post">
+      {% csrf_token %}
+      {% include '_form_fields.html' %}
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Update password</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

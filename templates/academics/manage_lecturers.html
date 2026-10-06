@@ -1,0 +1,47 @@
+{% extends 'base_app.html' %}
+{% block title %}Lecturers{% endblock %}
+{% block page_title %}Lecturers{% endblock %}
+
+{% block sidenav %}{% include 'academics/_admin_nav.html' with active='lecturers' %}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="section-title">
+    <h2 style="font-size:17px;">All lecturers</h2>
+    <a class="btn btn-primary btn-sm" href="{% url 'accounts:create_lecturer' %}">New lecturer account</a>
+  </div>
+  {% if lecturers %}
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Staff ID</th><th>Name</th><th>Email</th><th>Phone</th>
+            <th class="col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for l in lecturers %}
+          <tr>
+            <td class="col-id">{{ l.lecturer_profile.staff_id }}</td>
+            <td>{{ l.get_full_name }}</td>
+            <td class="col-muted">{{ l.email }}</td>
+            <td class="col-muted col-nowrap">{{ l.phone }}</td>
+            <td class="col-actions">
+              <span class="row-actions">
+                <a class="btn btn-outline btn-sm" href="{% url 'academics:edit_lecturer' l.pk %}">Edit</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'academics:delete_lecturer' l.pk %}">Delete</a>
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty">
+      <strong>No lecturer accounts yet</strong>
+      Create one so they can start uploading results.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

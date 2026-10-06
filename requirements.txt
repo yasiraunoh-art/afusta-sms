@@ -1,0 +1,10 @@
+django>=6.1,<6.2
+dj-database-url
+gunicorn
+pillow
+psycopg[binary]
+requests
+celery
+redis
+python-dotenv
+whitenoise

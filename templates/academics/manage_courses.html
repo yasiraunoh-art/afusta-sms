@@ -1,0 +1,54 @@
+{% extends 'base_app.html' %}
+{% block title %}Courses{% endblock %}
+{% block page_title %}Courses{% endblock %}
+
+{% block sidenav %}{% include 'academics/_admin_nav.html' with active='courses' %}{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+<div class="card">
+  <h3 class="card-title">Add a course</h3>
+  <form method="post">
+    {% csrf_token %}
+    {% include '_form_fields.html' %}
+    <div class="form-actions">
+      <button class="btn btn-primary" type="submit">Add course</button>
+    </div>
+  </form>
+</div>
+
+<div class="card">
+  <h3 class="card-title">All courses</h3>
+  {% if courses %}
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>Code</th><th>Title</th><th>Unit</th><th>Level</th>
+            <th class="col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for course in courses %}
+          <tr>
+            <td class="col-id">{{ course.course_code }}</td>
+            <td>{{ course.title }}</td>
+            <td class="col-muted">{{ course.unit }}</td>
+            <td class="col-muted">{{ course.level }}</td>
+            <td class="col-actions">
+              <span class="row-actions">
+                <a class="btn btn-outline btn-sm" href="{% url 'academics:edit_course' course.pk %}">Edit</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'academics:delete_course' course.pk %}">Delete</a>
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty"><strong>No courses yet</strong>Add your first course using the form beside this.</div>
+  {% endif %}
+</div>
+</div>
+{% endblock %}

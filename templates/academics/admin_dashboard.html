@@ -1,0 +1,44 @@
+{% extends 'base_app.html' %}
+{% block title %}Admin overview{% endblock %}
+{% block page_title %}Overview{% endblock %}
+
+{% block sidenav %}{% include 'academics/_admin_nav.html' with active='overview' %}{% endblock %}
+
+{% block content %}
+<div class="page-head">
+  <h2 style="font-size:20px;">Department of Computer Science</h2>
+  <p>Where results stand right now.</p>
+</div>
+
+<div class="stat-grid">
+  <a class="stat-card" href="{% url 'academics:pending_results' %}">
+    <div class="num">{{ pending_count }}</div><div class="label">Pending approval</div>
+  </a>
+  <a class="stat-card" href="{% url 'academics:notification_log' %}">
+    <div class="num">{{ approved_count }}</div><div class="label">Approved &amp; sent</div>
+  </a>
+  <a class="stat-card" href="{% url 'academics:manage_students' %}">
+    <div class="num">{{ student_count }}</div><div class="label">Registered students</div>
+  </a>
+  <a class="stat-card" href="{% url 'academics:manage_lecturers' %}">
+    <div class="num">{{ lecturer_count }}</div><div class="label">Lecturers</div>
+  </a>
+  <a class="stat-card" href="{% url 'academics:manage_courses' %}">
+    <div class="num">{{ course_count }}</div><div class="label">Courses</div>
+  </a>
+</div>
+
+<div class="card">
+  <h3 class="card-title">Get started</h3>
+  <p style="margin-top:0; color:var(--ink-soft);">
+    New department? Add your courses, assign lecturers to them, then create lecturer accounts. Students can
+    register themselves from the home page, or you can enrol them here.
+  </p>
+  <div class="form-actions">
+    <a class="btn btn-outline btn-sm" href="{% url 'academics:manage_courses' %}">Add a course</a>
+    <a class="btn btn-outline btn-sm" href="{% url 'accounts:create_lecturer' %}">Create a lecturer account</a>
+    <a class="btn btn-outline btn-sm" href="{% url 'academics:add_student' %}">Add a student</a>
+    <a class="btn btn-outline btn-sm" href="{% url 'academics:pending_results' %}">Review pending results</a>
+  </div>
+</div>
+{% endblock %}

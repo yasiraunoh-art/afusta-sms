@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./venv/bin/python manage.py check)",
+      "Bash(./venv/bin/python manage.py makemigrations --check --dry-run)",
+      "Bash(rm -rf /tmp/pwenv /tmp/shot*.py /tmp/probe*.py /tmp/shots /tmp/shots2 /tmp/shots3 /tmp/shots4 /tmp/django.log)",
+      "Bash(git -C . status --short)",
+      "Bash(python3 -m venv pwenv2 -q)",
+      "Bash(/tmp/pwenv2/bin/pip install *)",
+      "Bash(python3 -m venv /tmp/pwenv2)",
+      "Bash(/tmp/pwenv2/bin/python -c \"import playwright; print\\('pw ok'\\)\")",
+      "Read(//tmp/hs/**)",
+      "Read(//private/tmp/hs/**)",
+      "Bash(curl -s http://127.0.0.1:8765/)"
+    ],
+    "additionalDirectories": [
+      "/private/tmp/pwenv2"
+    ]
+  }
+}

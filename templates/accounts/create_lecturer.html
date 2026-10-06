@@ -1,0 +1,16 @@
+{% extends 'base_app.html' %}
+{% block title %}New lecturer{% endblock %}
+{% block page_title %}Create a lecturer account{% endblock %}
+
+{% block sidenav %}{% include 'academics/_admin_nav.html' with active='lecturers' %}{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:440px;">
+  <p style="margin-top:0;">Share the staff ID and password with the lecturer directly &mdash; they'll use the staff ID to log in.</p>
+  <form method="post">
+    {% csrf_token %}
+    {% include '_form_fields.html' %}
+    <button class="btn btn-primary" style="margin-top:20px;" type="submit">Create account</button>
+  </form>
+</div>
+{% endblock %}

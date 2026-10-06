@@ -1,0 +1,21 @@
+{% extends 'base_app.html' %}
+{% block title %}Upload a result{% endblock %}
+{% block page_title %}Upload a result{% endblock %}
+
+{% block sidenav %}{% include 'academics/_lecturer_nav.html' with active='upload' %}{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:520px;">
+  <p class="helptext" style="margin:0 0 20px;">
+    Submissions go to the department admin for approval. The student is alerted the moment it's approved.
+  </p>
+  <form method="post">
+    {% csrf_token %}
+    {% include '_form_fields.html' %}
+    <div class="form-actions">
+      <button class="btn btn-primary" type="submit">Submit for approval</button>
+      <a class="btn btn-outline" href="{% url 'academics:lecturer_dashboard' %}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

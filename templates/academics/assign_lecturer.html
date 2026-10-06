@@ -1,0 +1,48 @@
+{% extends 'base_app.html' %}
+{% block title %}Assign lecturers{% endblock %}
+{% block page_title %}Assign lecturers to courses{% endblock %}
+
+{% block sidenav %}{% include 'academics/_admin_nav.html' with active='assign' %}{% endblock %}
+
+{% block content %}
+<div class="grid-2">
+  <div class="card">
+    <h3 class="card-title">New assignment</h3>
+    <p class="helptext" style="margin:0 0 16px;">A lecturer can only upload results for courses assigned to them.</p>
+    <form method="post">
+      {% csrf_token %}
+      {% include '_form_fields.html' %}
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Assign</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h3 class="card-title">Current assignments</h3>
+    {% if assignments %}
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Lecturer</th><th>Course</th></tr></thead>
+          <tbody>
+            {% for a in assignments %}
+            <tr>
+              <td>{{ a.lecturer.get_full_name }}</td>
+              <td>
+                <span class="col-id">{{ a.course.course_code }}</span>
+                <span class="col-muted">&mdash; {{ a.course.title }}</span>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="empty">
+        <strong>No assignments yet</strong>
+        Assign a lecturer to a course so they can upload its results.
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

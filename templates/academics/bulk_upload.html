@@ -1,0 +1,18 @@
+{% extends 'base_app.html' %}
+{% block title %}Bulk upload{% endblock %}
+{% block page_title %}Bulk upload results{% endblock %}
+
+{% block sidenav %}{% include 'academics/_lecturer_nav.html' with active='bulk' %}{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width:560px;">
+  <p style="margin-top:0;">Upload a CSV with the columns below. Only rows for courses assigned to you are accepted; everything else is skipped and reported back to you.</p>
+  <p class="helptext" style="margin-bottom:20px;">Columns: <code>matric_no,course_code,score,semester,session</code></p>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="csv_file">CSV file</label>
+    <input class="form-control" type="file" name="csv_file" id="csv_file" accept=".csv" required>
+    <div class="form-actions"><button class="btn btn-primary" type="submit">Upload</button></div>
+  </form>
+</div>
+{% endblock %}

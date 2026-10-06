@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Student sign up{% endblock %}
+{% block content %}
+<div class="auth-split">
+  <aside class="auth-visual">
+    <div>
+      <h2>Register once. Never chase a notice board again.</h2>
+      <p>Every result the department approves is pushed straight to your phone and inbox.</p>
+    </div>
+  </aside>
+
+  <div class="auth-wrap">
+    <div class="auth-card" style="max-width:480px;">
+      <h2>Create your student account</h2>
+      <p class="sub">Use the phone number and email you actually check &mdash; that's where your alerts go.</p>
+
+      <form method="post">
+        {% csrf_token %}
+        {% include '_form_fields.html' %}
+        <button class="btn btn-primary btn-block" style="margin-top:24px;" type="submit">Create account</button>
+      </form>
+      <p class="auth-foot">Already registered? <a href="{% url 'accounts:login' %}">Log in</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

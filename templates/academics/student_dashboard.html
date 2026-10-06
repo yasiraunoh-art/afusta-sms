@@ -1,0 +1,43 @@
+{% extends 'base_app.html' %}
+{% block title %}My results{% endblock %}
+{% block page_title %}My results{% endblock %}
+
+{% block sidenav %}{% include 'academics/_student_nav.html' with active='results' %}{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="section-title">
+    <h2>Released results</h2>
+    <span class="helptext">Only approved results appear here &mdash; and are also sent to your phone and email.</span>
+  </div>
+
+  {% if results %}
+    <div class="table-wrap">
+      <table class="data">
+        <thead>
+          <tr><th>Course</th><th>Session</th><th>Semester</th><th>Score</th><th>Grade</th></tr>
+        </thead>
+        <tbody>
+          {% for result in results %}
+          <tr>
+            <td>
+              <span class="col-id">{{ result.course.course_code }}</span>
+              <span class="col-muted">&mdash; {{ result.course.title }}</span>
+            </td>
+            <td class="col-muted col-nowrap">{{ result.session }}</td>
+            <td class="col-muted">{{ result.get_semester_display }}</td>
+            <td>{{ result.score }}</td>
+            <td><span class="badge badge-grade">{{ result.grade }}</span></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty">
+      <strong>Nothing released yet</strong>
+      No results have been released to you. Check back after your department releases grades for the semester.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

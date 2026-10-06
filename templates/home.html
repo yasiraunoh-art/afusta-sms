@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="hero">
+  <div class="container-narrow">
+    <div>
+      <span class="hero-badge">Department of Computer Science, AFUSTA</span>
+      <h1>Get your results by SMS and email as soon as they are released.</h1>
+      <p class="lede">No more crowding around the notice board. Sign up once with your matric number, and every result your department approves is sent straight to your phone and your inbox.</p>
+      <div class="actions">
+        {% if user.is_authenticated %}
+          <a class="btn btn-primary" href="{% url 'accounts:redirect_after_login' %}">Go to my dashboard</a>
+        {% else %}
+          <a class="btn btn-primary" href="{% url 'accounts:register_student' %}">Register as a student</a>
+          <a class="btn btn-ghost" href="{% url 'accounts:login' %}">Staff / admin log in</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <figure class="hero-media">
+      <img src="{% static 'images/campus-gate.jpg' %}"
+           alt="The main gate monument at Abdullahi Fodio University of Science and Technology, Aliero">
+      <figcaption>AFUSTA main gate, Aliero, Kebbi State</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="strip">
+  <div class="container-narrow">
+    <span class="eyebrow">How it works</span>
+    <h2 style="font-size:26px; margin-top:6px;">Three steps from your lecturer to your phone</h2>
+    <div class="strip-grid">
+      <div class="strip-item">
+        <h3>1. Your lecturer uploads the scores</h3>
+        <p>Lecturers enter results for the courses they teach. They can do one student at a time, or upload a whole class in a single file.</p>
+      </div>
+      <div class="strip-item">
+        <h3>2. The department approves them</h3>
+        <p>A department admin checks every score before it goes out. Nothing reaches you until it has been approved.</p>
+      </div>
+      <div class="strip-item">
+        <h3>3. You get an alert</h3>
+        <p>As soon as your result is approved, we send it to your phone and your email. You do not have to keep checking.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

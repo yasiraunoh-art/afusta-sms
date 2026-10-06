@@ -1,0 +1,17 @@
+{% comment %}
+Admin sidebar links. Include with the current page's key so it highlights:
+
+  {% include 'academics/_admin_nav.html' with active='courses' %}
+
+Keys: overview, pending, courses, assign, lecturers, students, log
+{% endcomment %}
+<p class="side-label">Results</p>
+<a class="side-link{% if active == 'overview' %} active{% endif %}" href="{% url 'academics:admin_dashboard' %}">Overview</a>
+<a class="side-link{% if active == 'pending' %} active{% endif %}" href="{% url 'academics:pending_results' %}">Pending approvals</a>
+<a class="side-link{% if active == 'log' %} active{% endif %}" href="{% url 'academics:notification_log' %}">Notification log</a>
+
+<p class="side-label">Department</p>
+<a class="side-link{% if active == 'courses' %} active{% endif %}" href="{% url 'academics:manage_courses' %}">Courses</a>
+<a class="side-link{% if active == 'assign' %} active{% endif %}" href="{% url 'academics:assign_lecturer' %}">Assign lecturers</a>
+<a class="side-link{% if active == 'lecturers' %} active{% endif %}" href="{% url 'academics:manage_lecturers' %}">Lecturers</a>
+<a class="side-link{% if active == 'students' %} active{% endif %}" href="{% url 'academics:manage_students' %}">Students</a>
