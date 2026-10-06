@@ -142,6 +142,11 @@ if DATABASE_URL:
             ssl_require=not DEBUG,
         )
     }
+elif not DEBUG or VERCEL_HOSTS:
+    raise ImproperlyConfigured(
+        'DATABASE_URL must point to a persistent PostgreSQL database in production. '
+        'Vercel serverless functions cannot write to the bundled SQLite database.'
+    )
 else:
     DATABASES = {
         'default': {

@@ -11,6 +11,15 @@ See the [visual architecture, sequence flows, and proposed roadmap](docs/system-
 The [detailed architecture notes](docs/architecture-and-roadmap.md) explain the
 current behavior and roadmap recommendations.
 
+## Vercel database requirement
+
+Vercel's bundled SQLite database is read-only at runtime. Configure a persistent
+PostgreSQL provider and set its connection string as the `DATABASE_URL`
+environment variable in Vercel. Set `DEBUG=False`, then run
+`python manage.py migrate` against that database before serving requests.
+Production settings now refuse to fall back to SQLite when a Vercel hostname
+is present.
+
 ## Roles
 
 - **Student** — registers with matric number, phone and email; views their
