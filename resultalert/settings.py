@@ -40,6 +40,20 @@ ALLOWED_HOSTS = [
     for host in os.environ.get('ALLOWED_HOSTS', '').split(',')
     if host.strip()
 ]
+
+VERCEL_HOSTS = [
+    os.environ[variable].strip()
+    for variable in (
+        'VERCEL_URL',
+        'VERCEL_PROJECT_PRODUCTION_URL',
+        'VERCEL_BRANCH_URL',
+    )
+    if os.environ.get(variable, '').strip()
+]
+for vercel_host in VERCEL_HOSTS:
+    if vercel_host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(vercel_host)
+
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -53,10 +67,14 @@ if RENDER_EXTERNAL_HOSTNAME:
     render_origin = f'https://{RENDER_EXTERNAL_HOSTNAME}'
     if render_origin not in CSRF_TRUSTED_ORIGINS:
         CSRF_TRUSTED_ORIGINS.append(render_origin)
+for vercel_host in VERCEL_HOSTS:
+    vercel_origin = f'https://{vercel_host}'
+    if vercel_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(vercel_origin)
 
 TRUST_PROXY_HEADERS = (
     os.environ.get('TRUST_PROXY_HEADERS', '').lower() == 'true'
-    or bool(RENDER_EXTERNAL_HOSTNAME)
+    or bool(RENDER_EXTERNAL_HOSTNAME or VERCEL_HOSTS)
 )
 SECURE_PROXY_SSL_HEADER = (
     ('HTTP_X_FORWARDED_PROTO', 'https') if TRUST_PROXY_HEADERS else None
