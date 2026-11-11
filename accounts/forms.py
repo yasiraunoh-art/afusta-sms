@@ -53,7 +53,10 @@ class AccountForm(forms.Form):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
     phone = forms.CharField(
         max_length=20,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '+2348012345678'}),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': '07061413149 or +2347061413149',
+        }),
     )
     password = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
@@ -88,6 +91,12 @@ class AccountForm(forms.Form):
         if clashes.exists():
             raise forms.ValidationError('An account with this ID already exists.')
         return value
+
+    def clean_phone(self):
+        phone = self.cleaned_data['phone']
+        if phone.startswith('0') and len(phone) == 11 and phone.isdigit():
+            return f'+234{phone[1:]}'
+        return phone
 
     def profile_fields(self):
         """Profile-model field values to save. Extended by subclasses."""

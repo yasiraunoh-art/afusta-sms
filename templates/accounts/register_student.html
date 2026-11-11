@@ -16,7 +16,7 @@
 
       <form method="post">
         {% csrf_token %}
-        {% include '_form_fields.html' %}
+        {% include '_form_fields.html' with student_signup=True %}
         <button class="btn btn-primary btn-block" style="margin-top:24px;" type="submit">Create account</button>
       </form>
       <p class="auth-foot">Already registered? <a href="{% url 'accounts:login' %}">Log in</a></p>

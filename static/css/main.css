@@ -260,6 +260,7 @@ a:hover { color: var(--green); }
 label { font-size: 13.5px; font-weight: 600; color: var(--ink); display: block; margin-top: 16px; }
 label:first-child { margin-top: 0; }
 .field-error { color: var(--red); font-size: 12.5px; margin-top: 4px; margin-bottom: 0; }
+.required-marker { color: var(--red); }
 .helptext { font-size: 12.5px; color: var(--ink-soft); margin-top: 4px; margin-bottom: 0; }
 /* Django's password validators arrive as an <ul> inside the field help text. */
 .helptext ul { margin: 6px 0 0; padding-left: 18px; }

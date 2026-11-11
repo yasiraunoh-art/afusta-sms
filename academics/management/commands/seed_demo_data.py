@@ -28,23 +28,33 @@ class Command(BaseCommand):
 
         if not User.objects.filter(username='CSC-LEC-01').exists():
             lecturer = User.objects.create_user(
-                username='CSC-LEC-01', password='lecturer12345', email='lecturer@afusta.edu.ng',
+                username='CSC-LEC-01',
+                password='lecturer12345' if settings.DEBUG else None,
+                email='lecturer@afusta.edu.ng',
                 first_name='Musa', last_name='Bello', phone='+2348011111111', role=User.Role.LECTURER,
             )
             LecturerProfile.objects.create(user=lecturer, staff_id='CSC-LEC-01')
-            self.stdout.write(self.style.SUCCESS('Created lecturer login: CSC-LEC-01 / lecturer12345'))
+            self.stdout.write(self.style.SUCCESS('Created lecturer login: CSC-LEC-01'))
         else:
             lecturer = User.objects.get(username='CSC-LEC-01')
+            if not settings.DEBUG and lecturer.check_password('lecturer12345'):
+                lecturer.set_unusable_password()
+                lecturer.save(update_fields=['password'])
 
         if not User.objects.filter(username='CSC/2021/001').exists():
             student = User.objects.create_user(
-                username='CSC/2021/001', password='student12345', email='student@afusta.edu.ng',
+                username='CSC/2021/001',
+                password='student12345' if settings.DEBUG else None,
+                email='student@afusta.edu.ng',
                 first_name='Amina', last_name='Yusuf', phone='+2348022222222', role=User.Role.STUDENT,
             )
             StudentProfile.objects.create(user=student, matric_no='CSC/2021/001', level='300')
-            self.stdout.write(self.style.SUCCESS('Created student login: CSC/2021/001 / student12345'))
+            self.stdout.write(self.style.SUCCESS('Created student login: CSC/2021/001'))
         else:
             student = User.objects.get(username='CSC/2021/001')
+            if not settings.DEBUG and student.check_password('student12345'):
+                student.set_unusable_password()
+                student.save(update_fields=['password'])
 
         course, _ = Course.objects.get_or_create(
             course_code='CSC301', defaults={'title': 'Operating Systems', 'unit': 3, 'level': '300'}

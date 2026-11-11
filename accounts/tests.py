@@ -27,6 +27,26 @@ def make_lecturer(username='CSC-LEC-01', password='lecturer12345'):
 class HomePageTests(TestCase):
     """The sign-up / log-in calls to action only belong to signed-out visitors."""
 
+    def test_student_signup_marks_compulsory_fields(self):
+        response = self.client.get(reverse('accounts:register_student'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content.count(b'class="required-marker">*</span>'), 7)
+
+    def test_student_signup_stores_local_phone_with_nigerian_country_code(self):
+        response = self.client.post(reverse('accounts:register_student'), {
+            'first_name': 'Amina',
+            'last_name': 'Yusuf',
+            'matric_no': 'CSC/2021/002',
+            'level': '300',
+            'email': 'new-student@afusta.edu.ng',
+            'phone': '07061413149',
+            'password': 'student12345',
+        })
+
+        self.assertEqual(response.status_code, 302)
+        student = User.objects.get(username='CSC/2021/002')
+        self.assertEqual(student.phone, '+2347061413149')
+
     def test_signed_out_visitor_sees_both_calls_to_action(self):
         response = self.client.get('/')
         self.assertContains(response, 'Register as a student')

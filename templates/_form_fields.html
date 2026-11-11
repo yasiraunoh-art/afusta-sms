@@ -1,6 +1,6 @@
 {% comment %}Renders every field of `form` plus its errors. Wrap in your own <form>.{% endcomment %}
 {% for field in form %}
-  <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+  <label for="{{ field.id_for_label }}">{{ field.label }}{% if student_signup %}{% if field.name == 'first_name' or field.name == 'last_name' or field.name == 'matric_no' or field.name == 'level' or field.name == 'email' or field.name == 'phone' or field.name == 'password' %} <span class="required-marker">*</span>{% endif %}{% endif %}</label>
   {{ field }}
   {# a div, not a p: Django's password help text contains a <ul>, which would close a <p> early #}
   {% if field.help_text %}<div class="helptext">{{ field.help_text }}</div>{% endif %}
