@@ -233,12 +233,12 @@ DEFAULT_FROM_EMAIL = os.environ.get(
     'DEFAULT_FROM_EMAIL', 'AFUSTA CS Result Alert <no-reply@afusta.edu.ng>'
 )
 
-AFRICASTALKING_USERNAME = os.environ.get('AFRICASTALKING_USERNAME', 'sandbox')
+AFRICASTALKING_USERNAME = os.environ.get('AFRICASTALKING_USERNAME', '')
 AFRICASTALKING_API_KEY = os.environ.get('AFRICASTALKING_API_KEY', '')
-AFRICASTALKING_SENDER_ID = os.environ.get('AFRICASTALKING_SENDER_ID', '')
+AFRICASTALKING_SENDER_ID = os.environ.get('AFRICASTALKING_SENDER_ID', 'AFUSTA')
 AFRICASTALKING_SMS_URL = os.environ.get(
     'AFRICASTALKING_SMS_URL',
-    'https://api.sandbox.africastalking.com/version1/messaging',
+    'https://api.africastalking.com/version1/messaging',
 )
 
 # When True (default), notification "sending" happens inline in the request/
